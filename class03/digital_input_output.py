@@ -14,6 +14,7 @@ def setup():
   global pin41, pin1
 
   M5.begin()
+  # initialize pin 41 (screen button on AtomM5 board) as input;
   pin41 = Pin(41, mode=Pin.IN)
   pin1 = Pin(1, mode=Pin.OUT)
 
