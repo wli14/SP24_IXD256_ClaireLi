@@ -1,0 +1,118 @@
+import os, sys, io
+import M5
+from M5 import *
+from hardware import *
+import time
+
+pin_label = None
+program_state_label = None
+input_pin = None
+rect0 = None
+input_value = 0
+input_timer = 0
+
+program_state = 'START'
+animation_timer = 0
+animation_duration = 9000  # 9 seconds in milliseconds
+wait_timer = 0
+wait_duration = 2000  # 2 seconds in milliseconds
+
+def setup():
+    global pin_label, program_state_label, input_pin, rect0
+
+    M5.begin()
+    rect0 = Widgets.Rectangle(0, 0, 128, 44, 0x000000, 0x000000)
+    pin_label = Widgets.Label("input", 5, 5, 1.0, 0xffffff, 0x000000, Widgets.FONTS.DejaVu18)
+    program_state_label = Widgets.Label("START", 5, 25, 1.0, 0xFF69B4, 0x000000, Widgets.FONTS.DejaVu18)
+
+    
+    time.sleep(1)
+    
+    # hide the program state and pin labels:
+    rect0.setVisible(False)
+    pin_label.setVisible(False)
+    program_state_label.setVisible(False)
+    
+    input_pin = Pin(1, mode=Pin.IN, pull=Pin.PULL_UP)
+
+def draw_blue_rectangle(row, col):
+    
+    # Set the color to blue
+    M5.Lcd.setTextColor(0x0000FF)
+
+    # Calculate the position of the blue rectangle based on row and column
+    x = col * 30  # Adjust the spacing as needed
+    y = row * 30  # Adjust the spacing as needed
+
+    # Draw a blue rectangle at the calculated position
+    M5.Lcd.drawRect(x, y, 20, 20, 0xFFFFFF)
+    
+
+
+def loop():
+    global pin_label, program_state_label, input_value, input_timer, program_state, animation_timer, wait_timer, rect0
+    
+
+    M5.update()
+
+    if time.ticks_ms() > input_timer + 500:
+        input_timer = time.ticks_ms()
+        input_value = input_pin.value()
+
+        #if input_value == 0:
+            #pin_label.setText('input LOW')
+        #else:
+            #pin_label.setText('input HIGH')
+
+    if program_state == 'START':
+        if input_value == 0:
+            program_state = 'RUN'
+            #program_state_label.setText('RUN')
+            animation_timer = time.ticks_ms()
+            
+    elif program_state == 'RUN':
+      if time.ticks_ms() - animation_timer < animation_duration:
+        # Calculate the position of the blue rectangle based on time
+        progress = (time.ticks_ms() - animation_timer) / 1000  # Convert to seconds
+        seconds_per_rectangle = 1  # Generate one rectangle per second
+        rectangle_number = int(progress / seconds_per_rectangle)
+
+        # Calculate row and column based on rectangle number
+        row = rectangle_number // 3
+        col = rectangle_number % 3
+
+        # Call the function to draw the blue rectangle at the calculated position
+        M5.Lcd.fillRect(col * 45, row * 45, 40, 40, 0xADD8E6)
+        
+      else:
+        # Animation finished, transition to the WAIT state
+        program_state = 'WAIT'
+        wait_timer = time.ticks_ms()  # Set the timer for waiting
+        
+    elif program_state == 'WAIT':
+      if time.ticks_ms() - wait_timer < wait_duration:
+      # Waiting period, do nothing
+        pass
+      else:
+      # Waiting finished, turn all rectangles pink
+        for row in range(3):
+            for col in range(3):
+                M5.Lcd.fillRect(col * 45, row * 45, 40, 40, 0xFF69B4)  # 0xFF69B4 represents pink
+                
+        rect0.setVisible(True) 
+        program_state_label.setVisible(True)
+        program_state_label.setText('Time Out')
+        program_state = 'RED'  # Transition to the next state after turning rectangles pink
+
+if __name__ == '__main__':
+    try:
+        setup()
+        while True:
+            loop()
+    except (Exception, KeyboardInterrupt) as e:
+        try:
+            from utility import print_error_msg
+            print_error_msg(e)
+        except ImportError:
+            print("please update to latest firmware")
+
