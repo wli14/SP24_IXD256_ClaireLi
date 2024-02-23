@@ -48,6 +48,7 @@ def draw():
                     p5.fill(360, saturation, 50)
                 
                 p5.ellipse(x, y, 20, 20)  # Use a fixed size for the circle
+
             elif (state == 1):
                 # Calculate saturation based on sensor value
                 saturation = p5.map(sensor_val, 0, 255, 0, 68)
@@ -59,5 +60,47 @@ def draw():
                 else:
                 
                     p5.fill(27, saturation, 58)
+                
+                p5.ellipse(x, y, 20, 20)  # Use a fixed size for the circle
+
+            elif (state == 2):
+                # Calculate saturation based on sensor value
+                saturation = p5.map(sensor_val, 0, 255, 0, 68)
+
+                # Check if the current circle is in the 11th or 12th column
+                if i == 10 or i == 11:
+    
+                    p5.fill(198, saturation, 50)
+                else:
+                
+                    p5.fill(240, saturation, 50)
+                
+                p5.ellipse(x, y, 20, 20)  # Use a fixed size for the circle
+
+            elif (state == 3):
+                # Calculate saturation based on sensor value
+                saturation = p5.map(sensor_val, 0, 255, 0, 68)
+
+                # Check if the current circle is in the 11th or 12th column
+                if i == 10 or i == 11:
+    
+                    p5.fill(356, saturation, 50)
+                else:
+                
+                    p5.fill(198, saturation, 49)
+                
+                p5.ellipse(x, y, 20, 20)  # Use a fixed size for the circle
+
+            elif (state == 4):
+                # Calculate saturation based on sensor value
+                saturation = p5.map(sensor_val, 0, 255, 0, 68)
+
+                # Check if the current circle is in the 11th or 12th column
+                if i == 10 or i == 11:
+    
+                    p5.fill(17, saturation, 100)
+                else:
+                
+                    p5.fill(157, saturation, 63)
                 
                 p5.ellipse(x, y, 20, 20)  # Use a fixed size for the circle
