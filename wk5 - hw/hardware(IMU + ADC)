@@ -124,7 +124,7 @@ def loop():
   
   # print the 8-bit ADC value:
   print(str(adc1_val_8bit)+ ','+ str(state))
-  print(imu_x_val)
+  #print(imu_x_val)
 
   time.sleep_ms(500)
 
