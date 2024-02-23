@@ -12,6 +12,7 @@ label0 = None
 label1 = None
 label2 = None
 label3 = None
+label4 = None
 
 pin41 = None
 adc1 = None
@@ -27,14 +28,15 @@ imu_y_last = 0.0  # last Y-axis acceleration value
 state = None
 
 def setup():
-  global  title0, label0, label1, label2, label3, pin41, adc1
+  global  title0, label0, label1, label2, label3, label4, pin41, adc1
   M5.begin()
   # initialize display title and label:
-  title0 = Widgets.Title("IMU motion, ADC", 3, 0x000000, 0xffffff, Widgets.FONTS.DejaVu18)
-  label0 = Widgets.Label("tilt or move", 3, 20, 1.0, 0xffffff, 0x000000, Widgets.FONTS.DejaVu18)
-  label1 = Widgets.Label("up, down", 3, 40, 1.0, 0xffffff, 0x000000, Widgets.FONTS.DejaVu18)
-  label2 = Widgets.Label("left, right", 3, 60, 1.0, 0xffffff, 0x000000, Widgets.FONTS.DejaVu18)
-  label3 = Widgets.Label("--", 3, 80, 1.0, 0xffffff, 0x000000, Widgets.FONTS.DejaVu18)
+  title0 = Widgets.Title("IMU + ADC", 3, 0x000000, 0xffffff, Widgets.FONTS.DejaVu18)
+  label0 = Widgets.Label("ADC", 3, 20, 1.0, 0xffffff, 0x000000, Widgets.FONTS.DejaVu18)
+  label1 = Widgets.Label("left or right", 3, 40, 1.0, 0xffffff, 0x000000, Widgets.FONTS.DejaVu18)
+  label2 = Widgets.Label("up or down", 3, 60, 1.0, 0xffffff, 0x000000, Widgets.FONTS.DejaVu18)
+  label3 = Widgets.Label("X Motion", 3, 80, 1.0, 0xffffff, 0x000000, Widgets.FONTS.DejaVu18)
+  label4 = Widgets.Label("Y Motion", 3, 100, 1.0, 0xffffff, 0x000000, Widgets.FONTS.DejaVu18)
   
   # initialize analog to digital converter on pin 1:
   adc1 = ADC(Pin(1), atten=ADC.ATTN_11DB)
@@ -43,7 +45,7 @@ def setup():
 
 
 def loop():
-  global title0, label0, label1, label2, adc1, adc1_value
+  global title0, label0, label1, label2, label3, label4, adc1, adc1_value
   global imu_val, imu_x_val, imu_x_last, imu_y_val, imu_y_last
   global state
   M5.update()
@@ -67,41 +69,40 @@ def loop():
   # print the second IMU value (Y) only:
   #print('acc y:', imu_y_val)
   
+  state = 0
   # display RIGHT or LEFT according to X-axis tilt:
-  if imu_x_val < -0.5:
-    label0.setText('RIGHT')
-    
-  elif imu_x_val > 0.7:
-    label0.setText('LEFT')
-    
+  if imu_x_val < -0.4:
+    label1.setText('RIGHT')
+    state = 3
+  elif imu_x_val > 0.4:
+    label1.setText('LEFT')
+    state = 4
   else:
-    label0.setText('no X tilt')
-    
+    label1.setText('no X tilt')
 
   # display UP or DOWN according to Y-axis tilt:
   if imu_y_val < -0.5:
-    label1.setText('DOWN')
+    label2.setText('DOWN')
     state = 2
   elif imu_y_val > 0.5:
-    label1.setText('UP')
+    label2.setText('UP')
     state = 1
   else:
-    label1.setText('no Y tilt')
-    state = 0
+    label2.setText('no Y tilt')
     
   # display X MOTION according to change in X-axis:
   if (imu_x_val - imu_x_last > 0.5) or (imu_x_val - imu_x_last < -0.5):
-    label2.setText('X MOTION')
+    label3.setText('X MOTION')
   else:
-    label2.setText('no X motion')
+    label3.setText('no X motion')
 
   # absolute value of the difference between new and last Y values:
   imu_y_diff = math.fabs(imu_y_val - imu_y_last)  
   # display Y MOTION according to change in Y-axis:
   if imu_y_diff > 0.5:
-    label3.setText('Y MOTION')
+    label4.setText('Y MOTION')
   else:
-    label3.setText('no Y motion')
+    label4.setText('no Y motion')
     
   # format each IMU value with 2 points precision:
   #imu_str = 'acc x: {:0.2f}'.format(imu_val[0])
@@ -123,6 +124,7 @@ def loop():
   
   # print the 8-bit ADC value:
   print(str(adc1_val_8bit)+ ','+ str(state))
+  print(imu_x_val)
 
   time.sleep_ms(500)
 
