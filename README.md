@@ -13,4 +13,6 @@
 
 [Hardware Code IMU+ADC](https://github.com/wli14/SP24_IXD256_ClaireLi/blob/main/wk5%20-%20hw/hardware(IMU%20%2B%20ADC))
 ![State Diagram](https://github.com/wli14/SP24_IXD256_ClaireLi/assets/158603687/82dbd9b9-5dd9-4f7a-beaa-88e01aa7f025)
+![Prototype](https://github.com/wli14/SP24_IXD256_ClaireLi/assets/158603687/46276b63-68be-4f5d-877c-69d9b3c59bd0)
+
 
