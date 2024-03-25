@@ -28,4 +28,5 @@
 ![code 01](https://github.com/wli14/SP24_IXD256_ClaireLi/assets/158603687/200ec2b2-8ca8-4602-b0d5-1f3fbb68f6af)
 #### Used map_value function with five parameters: in_val (the input value to be mapped), in_min and in_max (the minimum and maximum values of the input range), out_min and out_max (the minimum and maximum values of the output range) to map the input value range to output value range.
 ![code 2](https://github.com/wli14/SP24_IXD256_ClaireLi/assets/158603687/4d0096bf-364e-4e19-bde0-3d6cfcd04a44)
-#### Used (light_sensor.read()) to read a value from light sensor, assuming it returns a value in the range of 0 to 4095 (a 12-bit ADC value), then maps this value to a range between 60 and 170 using the map_value function. Compare the current servo_val with the servo_val_final. The servo constantly loops to the new position represented by servo_val.
+#### Use the map_value function to map the light sensor return value in the range of 0 to 4095,to a range between 60 and 170. 
+#### Compare the current servo_val with the servo_val_final. The servo constantly loops to the new position represented by servo_val.
