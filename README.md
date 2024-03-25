@@ -17,3 +17,9 @@
 ![Prototype](https://github.com/wli14/SP24_IXD256_ClaireLi/assets/158603687/46276b63-68be-4f5d-877c-69d9b3c59bd0)
 
 
+# #Assignment #3.
+
+####
+
+[Hardware Code IMU+ADC](https://github.com/wli14/SP24_IXD256_ClaireLi/blob/main/w8%20-%20hw/py)
+
