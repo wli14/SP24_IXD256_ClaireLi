@@ -21,5 +21,5 @@
 
 ####
 
-[Hardware Code IMU+ADC](https://github.com/wli14/SP24_IXD256_ClaireLi/blob/main/w8%20-%20hw/py)
+[Hardware Code PHOTORESISTOR+SERVO](https://github.com/wli14/SP24_IXD256_ClaireLi/blob/main/w8%20-%20hw/py)
 
