@@ -19,7 +19,11 @@
 
 # #Assignment #3.
 
-####
+#### The concept is to demonstrate a clock that operates based on the amount of light throughout the day, utilizing a Photoresistor (M5 LIGHT unit) as an input to control a 180-degree servo as an output.
 
 [Hardware Code PHOTORESISTOR+SERVO](https://github.com/wli14/SP24_IXD256_ClaireLi/blob/main/w8%20-%20hw/py)
+![Original Concept Sketch](https://github.com/wli14/SP24_IXD256_ClaireLi/assets/158603687/f5385510-55b0-431e-98d4-b5ba70aa9964)
+![State Image](https://github.com/wli14/SP24_IXD256_ClaireLi/assets/158603687/623b3273-f84a-4338-8ee0-a17dbb10255b)
+
+
 
